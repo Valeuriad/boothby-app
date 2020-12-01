@@ -1,8 +1,9 @@
 {
   "name": "boothby-app",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "version": "1.0.0",
+  "author": "Thomah <5090230+Thomah@users.noreply.github.com>",
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://valeuriad.github.io/boothby-core/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -47,10 +48,11 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~3.3.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "prettier": "2.2.1",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~3.9.5"
   },
-  "description": "An Ionic project"
+  "description": "Boothby - App Component"
 }
