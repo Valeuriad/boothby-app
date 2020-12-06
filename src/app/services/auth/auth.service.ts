@@ -65,7 +65,7 @@ export class AuthService {
         (error) => {
           console.log(error);
           if (errorFunc) {
-            errorFunc();
+            errorFunc(error);
           }
         }
       );

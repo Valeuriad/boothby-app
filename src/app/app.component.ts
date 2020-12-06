@@ -78,7 +78,6 @@ export class AppComponent implements OnInit {
               .slack(params.code, `${environment.webUrl}/home`)
               .subscribe(
                 (res) => {
-                  console.log(res);
                   if (res && res.token) {
                     localStorage.setItem('boothby-jwt', JSON.stringify(res));
                     this.authService.currentTokenValue = res;
@@ -97,8 +96,6 @@ export class AppComponent implements OnInit {
                 }
               );
           });
-
-        console.log(params);
       }
     });
   }
@@ -107,7 +104,7 @@ export class AppComponent implements OnInit {
     this.authService.whoami(
       () => {},
       (error) => {
-        if (error.status === 401) {
+        if (error.status === 401 || error.status === 404) {
           this.logout();
           this.navCtrl.navigateRoot('/home');
         }
