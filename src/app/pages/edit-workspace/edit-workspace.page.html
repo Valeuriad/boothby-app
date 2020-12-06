@@ -1,9 +1,33 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>edit-workspace</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Espace de travail</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list lines="full" class="ion-no-margin">
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="{{ workspace.imageOriginale }}" />
+      </ion-avatar>
+      <ion-label>
+        <h3>{{ workspace.name }}</h3>
+        <p>{{ workspace.slackId }}</p></ion-label
+      >
+    </ion-item>
+    <ion-item
+      button
+      detail
+      href="https://app.slack.com/client/{{ workspace.slackId }}/{{ workspace.incomingWebhookChannelId }}"
+      target="_blank"
+    >
+      <ion-label>Canal {{ workspace.incomingWebhookChannel }}</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

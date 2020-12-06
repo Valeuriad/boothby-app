@@ -117,3 +117,22 @@ ion-note {
 ion-item.selected {
   --color: var(--ion-color-primary);
 }
+
+#side_menu {
+  padding-top: 0;
+  height: 100%;
+}
+
+#user-header {
+  margin-bottom: 1em;
+}
+
+#bottom_buttons {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+#logout_button {
+  cursor: pointer;
+}

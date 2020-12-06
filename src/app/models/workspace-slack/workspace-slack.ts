@@ -1,0 +1,26 @@
+export class WorkspaceSlack {
+  id: number = 0;
+  slackId: string = '';
+  name: string = '';
+  domain: string = '';
+  enterpriseId: string = '';
+  enterpriseName: string = '';
+  appId: string = '';
+  botUserId: string = '';
+  scope: string = '';
+  tokenType: string = '';
+  accessToken: string = '';
+  authedUserId: string = '';
+  incomingWebhookChannel: string = '';
+  incomingWebhookChannelId: string = '';
+  incomingWebhookConfigurationUrl: string = '';
+  incomingWebhookUrl: string = '';
+  image34: string = '';
+  image44: string = '';
+  image68: string = '';
+  image88: string = '';
+  image102: string = '';
+  image132: string = '';
+  image230: string = '';
+  imageOriginale: string = '';
+}

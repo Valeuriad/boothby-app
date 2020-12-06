@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Mon compte</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <section>
+    <form [formGroup]="form">
+      <ion-list>
+        <ion-item>
+          <ion-label position="stacked" color="{{ getColor('email') }}"
+            >Email</ion-label
+          >
+          <ion-input
+            formControlName="email"
+            type="email"
+            value="{{ authService.currentUserValue.email }}"
+            required
+            color="{{ getColor('email') }}"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Nom d'utilisateur</ion-label>
+          <ion-input
+            formControlName="username"
+            value="{{ authService.currentUserValue.username }}"
+            required
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Mot de passe</ion-label>
+          <ion-input formControlName="password" type="password"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="form.controls.password.value.length > 0">
+          <ion-label position="stacked">Confirmation Mot de passe</ion-label>
+          <ion-input formControlName="confirmation" type="password"></ion-input>
+        </ion-item>
+      </ion-list>
+    </form>
+  </section>
+  <section>
+    <ion-button expand="block" (click)="save()">Sauvegarder</ion-button>
+  </section>
+</ion-content>
