@@ -42,3 +42,9 @@
   --ion-color-shade: var(--ion-color-slack-shade);
   --ion-color-tint: var(--ion-color-slack-tint);
 }
+
+.can-go-back {
+  ion-menu-button {
+    display: none;
+  }
+}

@@ -20,7 +20,9 @@
             </ion-item>
           </ion-menu-toggle>
 
-          <ion-list-header> Boothby & Moi </ion-list-header>
+          <ion-list-header *ngIf="authService.currentTokenValue">
+            Boothby & Moi
+          </ion-list-header>
           <ion-menu-toggle
             auto-hide="false"
             *ngFor="let p of appPages; let i = index"
@@ -43,33 +45,30 @@
             </ion-item>
           </ion-menu-toggle>
 
-          <ion-list-header
-            *ngIf="authService.currentUserValue.role === 'ADMIN'"
-          >
-            Administration
-          </ion-list-header>
-          <ion-menu-toggle
-            auto-hide="false"
-            *ngFor="let p of adminPages; let i = index"
-          >
-            <ion-item
-              *ngIf="!p.connected || authService.currentTokenValue"
-              (click)="selectedIndex = i + 2"
-              routerDirection="root"
-              [routerLink]="[p.url]"
-              lines="none"
-              detail="false"
-              [class.selected]="selectedIndex == i + 2"
+          <div *ngIf="authService.currentUserValue.role === 'ADMIN'">
+            <ion-list-header> Administration </ion-list-header>
+            <ion-menu-toggle
+              auto-hide="false"
+              *ngFor="let p of adminPages; let i = index"
             >
-              <ion-icon
-                slot="start"
-                [ios]="p.icon + '-outline'"
-                [md]="p.icon + '-sharp'"
-              ></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-
+              <ion-item
+                *ngIf="!p.connected || authService.currentTokenValue"
+                (click)="selectedIndex = i + 2"
+                routerDirection="root"
+                [routerLink]="[p.url]"
+                lines="none"
+                detail="false"
+                [class.selected]="selectedIndex == i + 2"
+              >
+                <ion-icon
+                  slot="start"
+                  [ios]="p.icon + '-outline'"
+                  [md]="p.icon + '-sharp'"
+                ></ion-icon>
+                <ion-label>{{ p.title }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </div>
           <ion-menu-toggle id="bottom_buttons" auto-hide="false">
             <ion-item
               *ngIf="!authService.currentTokenValue"

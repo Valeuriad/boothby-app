@@ -11,6 +11,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from './services/auth/auth.service';
+import { ConditionalExpr } from '@angular/compiler';
 
 @Component({
   selector: 'app-root',

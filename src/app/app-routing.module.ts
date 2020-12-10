@@ -32,7 +32,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'dialogs/{id}',
+    path: 'dialogs/:id',
     loadChildren: () =>
       import('./pages/dialogs/edit-dialog/edit-dialog.module').then(
         (m) => m.EditDialogPageModule

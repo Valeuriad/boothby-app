@@ -7,4 +7,22 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-item
+      *ngFor="let d of dialogs; let i = index"
+      routerDirection="forward"
+      routerLink="/dialogs/{{d.id}}"
+      >{{ d.name }}</ion-item
+    >
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerDirection="forward" routerLink="/dialogs/0">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
