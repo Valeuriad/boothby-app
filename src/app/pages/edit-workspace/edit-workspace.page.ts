@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { WorkspaceSlack } from 'src/app/models/workspace-slack/workspace-slack';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { ProfileService } from 'src/app/services/profile/profile.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { WorkspaceSlackService } from 'src/app/services/workspace/workspace-slack.service';
 
@@ -15,8 +16,7 @@ export class EditWorkspacePage implements OnInit {
 
   constructor(
     private loadingController: LoadingController,
-    private authService: AuthService,
-    private userService: UserService,
+    private profileService: ProfileService,
     private workspaceSlackService: WorkspaceSlackService
   ) {}
 
@@ -40,15 +40,14 @@ export class EditWorkspacePage implements OnInit {
   }
 
   refresh(callback) {
-    this.userService
-      .find(this.authService.currentUserValue.id)
-      .subscribe((data) => {
-        this.workspaceSlackService
-          .findById(data[0].workspaceId)
-          .subscribe((data) => {
-            this.workspace = data;
-            callback();
-          });
-      });
+    this.profileService.getUserSlack().subscribe((data) => {
+      this.workspaceSlackService.findById(data[0].workspaceId).subscribe(
+        (data) => {
+          this.workspace = data;
+          callback();
+        },
+        (error) => callback()
+      );
+    });
   }
 }

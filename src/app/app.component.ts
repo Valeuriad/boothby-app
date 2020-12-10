@@ -28,9 +28,16 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Mon espace',
-      url: 'edit-workspace',
+      url: 'my-workspace',
       icon: 'grid',
       connected: true,
+    },
+  ];
+  public adminPages = [
+    {
+      title: 'Dialogs',
+      url: 'dialogs',
+      icon: 'document-text',
     },
   ];
 
@@ -67,7 +74,7 @@ export class AppComponent implements OnInit {
       color: 'danger',
     });
     this.route.queryParams.subscribe((params) => {
-      if (params && params.code) {
+      if (params && !params.install && params.code) {
         this.loadingController
           .create({
             message: 'Connexion en cours...',

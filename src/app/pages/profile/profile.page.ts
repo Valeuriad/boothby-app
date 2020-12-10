@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { ProfileService } from 'src/app/services/profile/profile.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class ProfilePage implements OnInit {
     private loadingController: LoadingController,
     private toastController: ToastController,
     private authService: AuthService,
-    private userService: UserService
+    private profileService: ProfileService
   ) {
     this.form = this.fb.group({
       email: [
@@ -60,25 +61,23 @@ export class ProfilePage implements OnInit {
         })
         .then((loading) => {
           loading.present();
-          this.userService
-            .updateById(this.authService.currentUserValue.id, user)
-            .subscribe(
-              () => {
-                controls['password'].setValue('');
-                controls['confirmation'].setValue('');
-                loading.dismiss();
-                this.attemptedSubmit = false;
-              },
-              (error) => {
-                if (error.status == 401) {
-                  toast.message = 'Identifiants incorrects';
-                  toast.present();
-                }
-                this.attemptedSubmit = false;
-                this.markFieldsDirty();
-                loading.dismiss();
+          this.profileService.updateById(user).subscribe(
+            () => {
+              controls['password'].setValue('');
+              controls['confirmation'].setValue('');
+              loading.dismiss();
+              this.attemptedSubmit = false;
+            },
+            (error) => {
+              if (error.status == 401) {
+                toast.message = 'Identifiants incorrects';
+                toast.present();
               }
-            );
+              this.attemptedSubmit = false;
+              this.markFieldsDirty();
+              loading.dismiss();
+            }
+          );
         });
     } else {
       this.markFieldsDirty();

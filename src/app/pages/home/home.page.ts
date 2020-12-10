@@ -39,17 +39,11 @@ export class HomePage implements OnInit {
           .then((loading) => {
             loading.present();
             this.installService
-              .slack(params.code, `${environment.webUrl}/home`)
+              .slack(params.code, `${environment.webUrl}/home?install=true`)
               .subscribe(
                 (res) => {
                   console.log(res);
                   loading.dismiss();
-                  // localStorage.setItem('jwt', JSON.stringify(res));
-                  // this.authService.currentTokenValue = res;
-                  // this.loginForm.reset();
-                  // this.authService.whoami();
-                  this.navCtrl.navigateRoot('/edit-workspace');
-                  // this.attemptedSubmit = false;
                 },
                 (error) => {
                   console.log(error);

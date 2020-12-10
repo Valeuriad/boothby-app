@@ -1,4 +1,4 @@
-<ion-app>
+<ion-app [class.dark-theme]="true">
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
@@ -20,6 +20,7 @@
             </ion-item>
           </ion-menu-toggle>
 
+          <ion-list-header> Boothby & Moi </ion-list-header>
           <ion-menu-toggle
             auto-hide="false"
             *ngFor="let p of appPages; let i = index"
@@ -32,6 +33,33 @@
               lines="none"
               detail="false"
               [class.selected]="selectedIndex == i"
+            >
+              <ion-icon
+                slot="start"
+                [ios]="p.icon + '-outline'"
+                [md]="p.icon + '-sharp'"
+              ></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-list-header
+            *ngIf="authService.currentUserValue.role === 'ADMIN'"
+          >
+            Administration
+          </ion-list-header>
+          <ion-menu-toggle
+            auto-hide="false"
+            *ngFor="let p of adminPages; let i = index"
+          >
+            <ion-item
+              *ngIf="!p.connected || authService.currentTokenValue"
+              (click)="selectedIndex = i + 2"
+              routerDirection="root"
+              [routerLink]="[p.url]"
+              lines="none"
+              detail="false"
+              [class.selected]="selectedIndex == i + 2"
             >
               <ion-icon
                 slot="start"

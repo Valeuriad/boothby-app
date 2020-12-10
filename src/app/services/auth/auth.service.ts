@@ -59,7 +59,7 @@ export class AuthService {
           localStorage.setItem('boothby-user', JSON.stringify(res));
           this.currentUserSubject.next(res);
           if (subscribeFunc) {
-            subscribeFunc();
+            subscribeFunc(res);
           }
         },
         (error) => {
