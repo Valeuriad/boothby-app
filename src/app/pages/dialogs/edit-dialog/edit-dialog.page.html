@@ -15,6 +15,12 @@
         <ion-label position="stacked">Nom</ion-label>
         <ion-input formControlName="name" required></ion-input>
       </ion-item>
+      <ion-item
+        routerDirection="forward"
+        routerLink="/dialogs/{{dialog.id}}/lines"
+        detail
+        >Lignes de dialogue</ion-item
+      >
     </ion-list>
   </form>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

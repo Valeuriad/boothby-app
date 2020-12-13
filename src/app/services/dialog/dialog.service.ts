@@ -21,6 +21,7 @@ export class DialogService {
   create(dialog: any): Observable<void> {
     return this.http.post<void>(`${environment.apiUrl}/dialogs`, dialog);
   }
+
   update(dialog: any): Observable<void> {
     return this.http.patch<void>(
       `${environment.apiUrl}/dialogs/${dialog.id}`,

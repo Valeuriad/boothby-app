@@ -38,6 +38,13 @@ const routes: Routes = [
         (m) => m.EditDialogPageModule
       ),
   },
+  {
+    path: 'dialogs/:id/lines',
+    loadChildren: () =>
+      import('./pages/dialogs/edit-dialog-lines/edit-dialog-lines.module').then(
+        (m) => m.EditDialogLinesPageModule
+      ),
+  },
 ];
 
 @NgModule({
