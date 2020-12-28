@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DialogLine } from 'src/app/models/dialog-line/dialog-line';
+import { DialogLine } from 'src/app/models/dialog-item/dialog-line/dialog-line';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -16,8 +16,8 @@ export class DialogLineService {
     );
   }
 
-  create(line: any): Observable<void> {
-    return this.http.post<void>(`${environment.apiUrl}/dialogs/lines`, line);
+  create(line: any): Observable<DialogLine> {
+    return this.http.post<DialogLine>(`${environment.apiUrl}/dialogs/lines`, line);
   }
 
   updateById(line: any): Observable<DialogLine> {

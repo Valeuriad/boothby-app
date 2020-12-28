@@ -3,8 +3,10 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { forkJoin } from 'rxjs';
-import { DialogLine } from 'src/app/models/dialog-line/dialog-line';
+import { DialogLineTransition } from 'src/app/models/dialog-item/dialog-line-transition/dialog-line-transition';
+import { DialogLine } from 'src/app/models/dialog-item/dialog-line/dialog-line';
 import { Dialog } from 'src/app/models/dialog/dialog';
+import { DialogLineTransitionService } from 'src/app/services/dialog-line-transition/dialog-line-transition.service';
 import { DialogLineService } from 'src/app/services/dialog-line/dialog-line.service';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
 
@@ -15,16 +17,19 @@ import { DialogService } from 'src/app/services/dialog/dialog.service';
 })
 export class EditDialogLinesPage implements OnInit {
   form: FormGroup;
+  tree: DialogLine = new DialogLine();
   lines: DialogLine[] = [];
+  transitions: DialogLineTransition[] = [];
   dialog: Dialog = new Dialog();
-  idSaved: number = 0;
+  idSaved = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private loadingController: LoadingController,
     private dialogService: DialogService,
-    private dialogLineService: DialogLineService
+    private dialogLineService: DialogLineService,
+    private dialogLineTransitionService: DialogLineTransitionService
   ) {
     this.resetForm();
   }
@@ -60,13 +65,16 @@ export class EditDialogLinesPage implements OnInit {
   }
 
   refresh(callback) {
-    var itemId: number = +this.activatedRoute.snapshot.paramMap.get('id');
-    let dialogRequest = this.dialogService.findById(itemId);
-    let dialogLinesRequest = this.dialogLineService.findAllByDialog(itemId);
-    forkJoin([dialogRequest, dialogLinesRequest]).subscribe(
+    const itemId: number = +this.activatedRoute.snapshot.paramMap.get('id');
+    const dialogRequest = this.dialogService.findById(itemId);
+    const dialogLinesRequest = this.dialogLineService.findAllByDialog(itemId);
+    const dialogLinesTransitionsRequest = this.dialogLineTransitionService.findAllByDialog(itemId);
+    forkJoin([dialogRequest, dialogLinesRequest, dialogLinesTransitionsRequest]).subscribe(
       (results) => {
         this.dialog = results[0];
         this.lines = results[1];
+        this.transitions = results[2];
+        this.buildTree();
         this.resetForm();
         results[1].forEach((line) => {
           this.linesForm().push(this.newLineForm(line));
@@ -77,12 +85,31 @@ export class EditDialogLinesPage implements OnInit {
     );
   }
 
+  buildTree() {
+    this.tree = this.lines.find(firstLine => firstLine.id === this.dialog.firstLine);
+    if(this.tree !== undefined && this.tree.transition !== undefined) {
+      if(this.tree.transition !== null) {
+        console.log(this.tree.transition.next);
+      }
+    }
+    console.log(this.tree);
+  }
+
   add() {
-    let line = {};
+    const line = {};
     line['dialogId'] = this.dialog.id;
     line['text'] = '';
-    this.dialogLineService.create(line).subscribe(() => {
-      this.refresh(() => {});
+    this.dialogLineService.create(line).subscribe(dialogLineSaved => {
+      if(this.dialog.firstLine === null) {
+        const dialog = {};
+        dialog['id'] = this.dialog.id;
+        dialog['firstLine'] = dialogLineSaved.id;
+        this.dialogService.update(dialog).subscribe(() => {
+          this.refresh(() => {});
+        });
+      } else {
+        this.refresh(() => {});
+      }
     });
   }
 

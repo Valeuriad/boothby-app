@@ -19,7 +19,7 @@ import { ConditionalExpr } from '@angular/compiler';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  public loginLink = `https://slack.com/oauth/v2/authorize?client_id=522614420722.521877890336&user_scope=identity.avatar,identity.basic,identity.email,identity.team&redirect_uri=${environment.webUrl}/home`;
+  public loginLink = `https://slack.com/oauth/v2/authorize?client_id=${environment.slackClientId}&user_scope=identity.avatar,identity.basic,identity.email,identity.team&redirect_uri=${environment.webUrl}/home`;
   public selectedIndex = 0;
   public appPages = [
     {
@@ -96,7 +96,7 @@ export class AppComponent implements OnInit {
                 },
                 (error) => {
                   console.log(error);
-                  if (error.status == 401) {
+                  if (error.status === 401) {
                     toast.message = 'Echec de connexion';
                     toast.present();
                   }

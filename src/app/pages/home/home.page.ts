@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  installLink = `https://slack.com/oauth/v2/authorize?client_id=522614420722.521877890336&scope=app_mentions:read,channels:join,channels:read,chat:write,files:write,im:write,incoming-webhook,users:read&redirect_uri=${environment.webUrl}/home?install=true`;
+  installLink = `https://slack.com/oauth/v2/authorize?client_id=${environment.slackClientId}&scope=app_mentions:read,channels:join,channels:read,chat:write,files:write,im:write,incoming-webhook,users:read&redirect_uri=${environment.webUrl}/home?install=true`;
 
   constructor(
     private route: ActivatedRoute,
